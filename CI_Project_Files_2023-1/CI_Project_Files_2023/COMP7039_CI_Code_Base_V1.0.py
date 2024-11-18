@@ -85,22 +85,33 @@ def display_races(id, time_taken, venue, fastest_runner):
     print(f"{fastest_runner} won the race.")
 
 
+#Paul's Function 
 def users_venue(races_location, runners_id):
+    #Prompt for new venue
     while True:
         user_location = read_nonempty_string("Where will the new race take place? ").capitalize()
         if user_location not in races_location:
             break
-    connection = open(f"{user_location}.txt", "a")
+        print("This venue already exists. Please provide a new venue.")
+
+    #Record the venue of the race
     races_location.append(user_location)
+    with open("races.txt", "a") as race_file:
+        print(user_location, file=race_file)
+
+    #Input race times for competitors
+    print("Input race times for competitors. Enter 0 if a competitor did not participate.")
     time_taken = []
-    updated_runners = []
-    for i in range(len(runners_id)):
-        time_taken_for_runner = read_integer(f"Time for {runners_id[i]} >> ")
-        if time_taken_for_runner = 0:
-            time_taken.append(time_taken_for_runner)
-            updated_runners.append(runners_id[i])
-            print(f"{runners_id[i]},{time_taken_for_runner},", file=connection)
-    connection.close()
+    with open(f"{user_location}.txt", "w") as race_results_file:
+        for runner_id in runners_id:
+            time_for_runner = read_integer(f"Time for {runner_id} >> ")
+            if time_for_runner >= 0:  
+                time_taken.append((runner_id, time_for_runner))
+                print(f"{runner_id},{time_for_runner}", file=race_results_file)
+            else:
+                print("Invalid time. Please enter a non-negative number.")
+    
+    print(f"Race results for {user_location} have been saved.")
 
 
 def updating_races_file(races_location):
