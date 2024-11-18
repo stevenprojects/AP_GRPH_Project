@@ -138,29 +138,42 @@ def reading_race_results(location):
     return id, time_taken
 
 
-def reading_race_results_of_relevant_runner(location, runner_id):
+#Rory's Funtion
+# Function which grabs all runners times and returns them
+def reading_race_results_of_relevant_runner(location):
     with open(f"{location}.txt") as input_type:
         lines = input_type.readlines()
     id = []
     time_taken = []
     for line in lines:
-        split_line = line.split(",".strip("\n"))
+        split_line = line.split(",")
         id.append(split_line[0])
         time_taken.append(int(split_line[1].strip("\n")))
-    for i in range(len(id)):
-        if runner_id == id[i]:
-            time_relevant_runner = time_taken[i]
-            return time_relevant_runner
-    return None
+    return id, time_taken  # Changed to return all runners times
 
 
-def displaying_winners_of_each_race(races_location):
-    print("Venue             Looser")
-    print("="*24)
-    for i in range(len(races_location)):
-        id, time_taken = reading_race_results(races_location[i])
-        fastest_runner = winner_of_race(id, time_taken)
-        print(f"{races_location[i]:<18s}{fastest_runner}")
+# Rory's Function
+# Function displays the top three finishers for each race venue, showing their positions, runner IDs, and times.
+def displaying_top_three_finishers(races_location):
+    print(f"{'Venue':<20}{'Position':<10}{'Runner ID':<15}{'Time':<10}")
+    print("=" * 55)
+    # Loop to display results
+    for venue in races_location:
+        id, time_taken = reading_race_results_of_relevant_runner(venue)
+        
+        # All runner IDs and sorted by time
+        runners = list(zip(id, time_taken))
+        runners.sort(key=lambda x: x[1])  
+
+        print(f"Results for {venue}")
+        print("-" * 55)
+
+        # Table that shows the top 3 race finishers
+        for i, (runner_id, time) in enumerate(runners[:3], start=1):
+            minutes, seconds = convert_time_to_minutes_and_seconds(time)
+            print(f"{venue:<20}{i:<10}{runner_id:<15}{minutes}m {seconds}s")
+        print("-" * 55)
+
 
 
 def relevant_runner_info(runners_name, runners_id):
