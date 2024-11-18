@@ -10,12 +10,15 @@ def read_integer_between_numbers(prompt, mini, maximum):
         except ValueError:
             print("Sorry - number only please.")
 
+
+# Steven's Function 
 def read_nonempty_string(prompt):
     while True:
-        users_input = input(prompt)
-        if len(users_input) > 0 and users_input.isalpha():
-            break
-    return users_input
+        users_input = input(prompt).strip()
+        if users_input.isalpha():
+            return users_input
+        print("Please enter a valid, non-empty string containing only letters.")
+
 
 
 def read_integer(prompt):
@@ -106,7 +109,7 @@ def updating_races_file(races_location):
         print(races_location[i], file=connection)
     connection.close()
 
-
+# Jack's Function 
 def competitors_by_county(name, id):
     county_dict = {}
 
