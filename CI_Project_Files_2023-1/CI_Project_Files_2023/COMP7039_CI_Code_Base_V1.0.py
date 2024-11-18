@@ -107,16 +107,22 @@ def updating_races_file(races_location):
 
 
 def competitors_by_county(name, id):
-    print("Cork runners")
-    print("=" * 20)
+    county_dict = {}
+
+    # Group competitors by county based on ID prefix
     for i in range(len(name)):
-        if id[i].startswith("CK"):
-            print(f"{name[i]} ({id[i]})")
-    print("Kerry runners")
-    print("=" * 20)
-    for i in range(len(name)):
-        if id[i].startswith("KY"):
-            print(f"{name[i]} ({id[i]})")
+        county_code = id[i][:2]  # Extract county code from ID
+        if county_code not in county_dict:
+            county_dict[county_code] = []
+        county_dict[county_code].append(f"{name[i]} ({id[i]})")
+
+    # Sort counties alphabetically and display competitors within each county
+    for county in sorted(county_dict.keys()):
+        print(f"{county} County Competitors")
+        print("=" * (len(county) + 19))
+        for competitor in sorted(county_dict[county]):
+            print(competitor)
+        print()
 
 
 def reading_race_results(location):
