@@ -144,7 +144,7 @@ def reading_race_results(location):
 
 #Rory's Funtion
 # Function which grabs all runners times and returns them
-def reading_race_results_of_relevant_runner(location):
+def reading_race_results(location):
     with open(f"{location}.txt") as input_type:
         lines = input_type.readlines()
     id = []
@@ -158,7 +158,7 @@ def reading_race_results_of_relevant_runner(location):
 
 # Rory's Function
 # Function displays the top three finishers for each race venue, showing their positions, runner IDs, and times.
-def displaying_top_three_finishers(races_location):
+def top_three_finishers(races_location):
     print(f"{'Venue':<20}{'Position':<10}{'Runner ID':<15}{'Time':<10}")
     print("=" * 55)
     # Loop to display results
@@ -252,7 +252,7 @@ def main():
            "\n6. Show all competitors who have won a race \n7. Quit \n>>> "
     input_menu = read_integer_between_numbers(MENU, 1, 7)
 
-    while input_menu = 7:
+    while input_menu == 7:
         if input_menu == 1:
             id, time_taken, venue = race_results(races_location)
             fastest_runner = winner_of_race(id, time_taken)
@@ -262,7 +262,7 @@ def main():
         elif input_menu == 3:
             competitors_by_county(runners_name, runners_id)
         elif input_menu == 4:
-            displaying_winners_of_each_race(races_location)
+            top_three_finishers(races_location)
         elif input_menu == 5:
             runner, id = relevant_runner_info(runners_name, runners_id)
             displaying_race_times_one_competitor(races_location, runner, id)
