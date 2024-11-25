@@ -53,23 +53,26 @@ def race_results(races_location):
     return id, time_taken, venue
 
 
-
+# Steven's Function 
 def race_venues():
     with open("races.txt") as input:
         lines = input.readlines()
     races_location = []
     for line in lines:
-        races_location.append(line.strip("\n"))
+        races_location.append(line.strip())
     return races_location
 
 
+# Steven's Function
 def winner_of_race(id, time_taken):
     quickest_time = min(time_taken)
     winner = ""
     for i in range(len(id)):
-        if quickest_time == time_taken[i]:
+        if time_taken[i] == quickest_time:
             winner = id[i]
+            break  # Exit the loop once the winner is found
     return winner
+
 
 
 def display_races(id, time_taken, venue, fastest_runner):
