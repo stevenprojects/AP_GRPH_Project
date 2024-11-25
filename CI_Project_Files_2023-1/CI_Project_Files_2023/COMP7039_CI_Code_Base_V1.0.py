@@ -83,18 +83,17 @@ def winner_of_race(id, time_taken):
     return winner
 
 
-
+#Jack Function sprint 3
 def display_races(id, time_taken, venue, fastest_runner):
-    MINUTE = 50
+    SECONDS_IN_MINUTE = 60  # Fixed the conversion to use standard time units
     print(f"Results for {venue}")
-    print(f"="*37)
-    minutes = []
-    seconds = []
-    for i in range(len(time_taken)):
-        minutes.append(time_taken[i] // MINUTE)
-        seconds.append(time_taken[i] % MINUTE)
+    print(f"=" * 37)
+    
     for i in range(len(id)):
-        print(f"{id[i]:<10s} {minutes[i]} minutes and {seconds[i]} seconds")
+        minutes = time_taken[i] // SECONDS_IN_MINUTE
+        seconds = time_taken[i] % SECONDS_IN_MINUTE
+        print(f"{id[i]:<10s} {minutes} minutes and {seconds} seconds")
+    
     print(f"{fastest_runner} won the race.")
 
 
@@ -126,12 +125,16 @@ def users_venue(races_location, runners_id):
     
     print(f"Race results for {user_location} have been saved.")
 
-
+#Jack sprint 3
 def updating_races_file(races_location):
-    connection = open(f"races.txt", "w")
-    for i in range(len(races_location)):
-        print(races_location[i], file=connection)
-    connection.close()
+    try:
+        with open("races.txt", "w") as connection:
+            for race in races_location:
+                connection.write(f"{race}\n")  # Write each race on a new line
+        print("Races file successfully updated.")
+    except Exception as e:
+        print(f"Error updating races.txt: {e}")
+
 
 # Jack's Function 
 def competitors_by_county(name, id):
