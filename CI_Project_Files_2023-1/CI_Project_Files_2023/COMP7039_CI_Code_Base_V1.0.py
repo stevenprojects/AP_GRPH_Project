@@ -52,7 +52,7 @@ def runners_data():
 
     return runners_name, runners_id
 
-# Steven's Function 
+# Steven's Function Sprint 3
 def race_results(races_location):
     for i, races_location_item in enumerate(races_location, start=1):
         print(f"{i}: {races_location_item}")
@@ -62,7 +62,7 @@ def race_results(races_location):
     return id, time_taken, venue
 
 
-# Steven's Function 
+# Steven's Function Sprint 3
 def race_venues():
     with open("races.txt") as input:
         lines = input.readlines()
@@ -201,21 +201,22 @@ def top_three_finishers(races_location):
         print("-" * 55)
 
 
-
+# Steven's Function Sprint 3 
 def relevant_runner_info(runners_name, runners_id):
     for i in range(len(runners_name)):
         print(f"{i + 1}: {runners_name[i]}")
     user_input = read_integer_between_numbers("Which Runner > ", 1, len(runners_name))
     runner = runners_name[user_input - 1]
-    id = runners_id[user_input -1]
+    id = runners_id[user_input - 1]
     return runner, id
 
-
+# Steven's Function Sprint 3
 def convert_time_to_minutes_and_seconds(time_taken):
-    MINUTE = 50
+    MINUTE = 60  # Corrected minute length to 60 seconds
     minutes = time_taken // MINUTE
     seconds = time_taken % MINUTE
     return minutes, seconds
+
 
 
 def sorting_where_runner_came_in_race(location, time):
