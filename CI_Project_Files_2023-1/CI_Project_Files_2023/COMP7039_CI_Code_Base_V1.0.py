@@ -20,27 +20,36 @@ def read_nonempty_string(prompt):
         print("Please enter a valid, non-empty string containing only letters.")
 
 
-
+#Jack function sprint 3
 def read_integer(prompt):
     while True:
         try:
             users_input = int(input(prompt))
             if users_input >= 0:
                 return users_input
+            else:
+                print("Please enter a non-negative number.")
         except ValueError:
-            print("Sorry -numbor olny please")
+            print("Sorry - numbers only, please.")
 
-
+#Jack function sprint 3
 def runners_data():
-    with open("runners.txt") as input:
-        lines = input.readlines()
     runners_name = []
     runners_id = []
-    for line in lines:
-        split_line = line.split(",")
-        runners_name.append(split_line[0])
-        id = split_line[1].strip("\n")
-        runners_id.append(id)
+
+    try:
+        with open("runners.txt", "r") as input_file:
+            lines = input_file.readlines()
+        for line in lines:
+            if "," in line:
+                split_line = line.strip().split(",")
+                runners_name.append(split_line[0].strip())
+                runners_id.append(split_line[1].strip())
+    except FileNotFoundError:
+        print("Error: 'runners.txt' file not found.")
+    except Exception as e:
+        print(f"Error reading 'runners.txt': {e}")
+
     return runners_name, runners_id
 
 # Steven's Function 
