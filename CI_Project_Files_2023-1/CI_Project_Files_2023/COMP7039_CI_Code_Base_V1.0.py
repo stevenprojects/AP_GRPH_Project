@@ -83,18 +83,17 @@ def winner_of_race(id, time_taken):
     return winner
 
 
-
+#Jack Function sprint 3
 def display_races(id, time_taken, venue, fastest_runner):
-    MINUTE = 50
+    SECONDS_IN_MINUTE = 60  # Fixed the conversion to use standard time units
     print(f"Results for {venue}")
-    print(f"="*37)
-    minutes = []
-    seconds = []
-    for i in range(len(time_taken)):
-        minutes.append(time_taken[i] // MINUTE)
-        seconds.append(time_taken[i] % MINUTE)
+    print(f"=" * 37)
+    
     for i in range(len(id)):
-        print(f"{id[i]:<10s} {minutes[i]} minutes and {seconds[i]} seconds")
+        minutes = time_taken[i] // SECONDS_IN_MINUTE
+        seconds = time_taken[i] % SECONDS_IN_MINUTE
+        print(f"{id[i]:<10s} {minutes} minutes and {seconds} seconds")
+    
     print(f"{fastest_runner} won the race.")
 
 
