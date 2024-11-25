@@ -125,12 +125,16 @@ def users_venue(races_location, runners_id):
     
     print(f"Race results for {user_location} have been saved.")
 
-
+#Jack sprint 3
 def updating_races_file(races_location):
-    connection = open(f"races.txt", "w")
-    for i in range(len(races_location)):
-        print(races_location[i], file=connection)
-    connection.close()
+    try:
+        with open("races.txt", "w") as connection:
+            for race in races_location:
+                connection.write(f"{race}\n")  # Write each race on a new line
+        print("Races file successfully updated.")
+    except Exception as e:
+        print(f"Error updating races.txt: {e}")
+
 
 # Jack's Function 
 def competitors_by_county(name, id):
