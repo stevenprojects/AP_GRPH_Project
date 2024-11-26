@@ -222,18 +222,19 @@ def convert_time_to_minutes_and_seconds(time_taken):
     return minutes, seconds
 
 
-
+# Steven's Function Sprint 3
 def sorting_where_runner_came_in_race(location, time):
     with open(f"{location}.txt") as input_type:
         lines = input_type.readlines()
     time_taken = []
     for line in lines:
-        split_line = line.split(",".strip("\n"))
-        t = int(split_line[1].strip("\n"))
+        split_line = line.strip().split(",")  # Fixed incorrect use of `strip` inside `split`
+        t = int(split_line[1].strip())  # Removed unnecessary `strip("\n")` as `strip()` handles all trailing whitespace
         time_taken.append(t)
 
     time_taken.sort()
     return time_taken.index(time) + 1, len(lines)
+
 
 
 def displaying_race_times_one_competitor(races_location, runner, id):
