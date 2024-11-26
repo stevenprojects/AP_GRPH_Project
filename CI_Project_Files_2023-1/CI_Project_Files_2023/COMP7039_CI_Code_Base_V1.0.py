@@ -155,16 +155,16 @@ def competitors_by_county(name, id):
             print(competitor)
         print()
 
-
+# Jack function sprint 3
 def reading_race_results(location):
     with open(f"{location}.txt") as input_type:
         lines = input_type.readlines()
     id = []
     time_taken = []
     for line in lines:
-        split_line = line.split(",".strip("\n"))
-        id.append(split_line[0])
-        time_taken.append(int(split_line[1].strip("\n")))
+        split_line = line.strip().split(",")  # Correctly split the line on commas after stripping whitespace and newlines
+        id.append(split_line[0])  # First part is the ID
+        time_taken.append(int(split_line[1]))  # Second part is the time, converted to integer
     return id, time_taken
 
 
