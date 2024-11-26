@@ -236,16 +236,40 @@ def sorting_where_runner_came_in_race(location, time):
     return time_taken.index(time) + 1, len(lines)
 
 
+#Jack function sprint 3
+def displaying_race_times_one_competitor(races_location, runner, runner_id):
+    print(f"{runner} ({runner_id})")
+    print("-" * 35)
+    found_any_race = False  # Track if the runner has participated in any race
 
-def displaying_race_times_one_competitor(races_location, runner, id):
-    print(f"{runner} ({id})")
-    print(f"-"*35)
-    for i in range(len(races_location)):
-        time_taken = reading_race_results_of_relevant_runner(races_location[i], id)
-        if time_taken is not None:
-            minutes, seconds = convert_time_to_minutes_and_seconds(time_taken)
-            came_in_race, number_in_race = sorting_where_runner_came_in_race(races_location[i], time_taken)
-            print(f"{races_location[i]} {minutes} mins {seconds} secs ({came_in_race} of {number_in_race})")
+    for race in races_location:
+        try:
+            # Read race results for the current race
+            race_results = reading_race_results(race)
+            ids, times = race_results
+            
+            # Check if the runner participated in the race
+            if runner_id in ids:
+                found_any_race = True
+                runner_index = ids.index(runner_id)
+                time_taken = times[runner_index]
+                
+                # Convert time to minutes and seconds
+                minutes, seconds = convert_time_to_minutes_and_seconds(time_taken)
+                
+                # Get the runner's position and total participants
+                position, total_runners = sorting_where_runner_came_in_race(race, time_taken)
+                
+                # Print results for the race
+                print(f"{race:<15} {minutes} mins {seconds} secs ({position} of {total_runners})")
+        
+        except FileNotFoundError:
+            print(f"Race file for {race} not found. Skipping.")
+        except Exception as e:
+            print(f"Error processing race {race}: {e}")
+
+    if not found_any_race:
+        print(f"No races found for {runner} ({runner_id}).")
 
 
 def finding_name_of_winner(fastest_runner, id, runners_name):
