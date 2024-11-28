@@ -271,29 +271,51 @@ def displaying_race_times_one_competitor(races_location, runner, runner_id):
     if not found_any_race:
         print(f"No races found for {runner} ({runner_id}).")
 
+#Rory function sprint 3
+def finding_name_of_winner(fastest_runner, runners_id, runners_name):
+    """
+    Find the name of the runner based on their ID.
+    """
+    try:
+        # Find the index of the fastest runner's ID in the runners_id list
+        index = runners_id.index(fastest_runner)
+        return runners_name[index]
+    except ValueError:
+        # Handle cases where the fastest_runner ID is not found
+        return "Unknown Runner"
 
-def finding_name_of_winner(fastest_runner, id, runners_name):
-    runner = ""
-    for i in range(len(id)):
-        if fastest_runner == id[i]:
-            runner = runners_name[i]
-    return runner
 
-
+#Paul function sprint 3
 def displaying_runners_who_have_won_at_least_one_race(races_location, runners_name, runners_id):
+    """
+    Display the runners who have won at least one race.
+    """
     print(f"The following runners have all won at least one race:")
     print(f"-" * 55)
-    winners = []
-    runners = []
-    for i, location in enumerate(races_location):
+    
+    winners = set()  # Use a set to track unique winners by ID
+    winner_details = []  # List to store (name, ID) tuples for display
+    
+    for location in races_location:
+        # Read race results for the current location
         id, time_taken = reading_race_results(location)
+        
+        # Find the fastest runner for the race
         fastest_runner = winner_of_race(id, time_taken)
-        name_of_runner = finding_name_of_winner(fastest_runner, runners_id, runners_name)
+        
+        # Avoid adding duplicate winners
         if fastest_runner not in winners:
-            winners.append(fastest_runner)
-            runners.append(name_of_runner)
-    for i, fastest_runner in enumerate(winners):
-        print(f"{runners[i]} ({fastest_runner})")
+            # Find the name of the runner
+            name_of_runner = finding_name_of_winner(fastest_runner, runners_id, runners_name)
+            
+            # Add to sets/lists for unique identification
+            winners.add(fastest_runner)
+            winner_details.append((name_of_runner, fastest_runner))
+    
+    # Display the winners in a formatted output
+    for name, runner_id in winner_details:
+        print(f"{name} ({runner_id})")
+
 
 
 def main():
